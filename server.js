@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 
-// const recipeRouter = require('./recipes/recipeRouter.js');
+const recipeRouter = require('./recipes/recipeRouter.js');
 
 
 const server = express();
@@ -12,7 +12,7 @@ server.use(express.json());
 
 server.use(logger);
 server.use(cors());
-// server.use('/api/recipes', recipeRouter);
+server.use('/api/recipes', recipeRouter);
 
 server.get('/', (req, res) => {
     res.send(`<h2>Welcome to the Recipies API!! BOOOM!</h2>`)
