@@ -17,10 +17,21 @@ exports.up = function(knex) {
                  tbl.increments();
                  tbl.integer('step_number').unsigned().notNullable(); // unsigned means the integer cannot be negative
                  tbl.string('instructions', 255).notNullable();
-                 tbl.integer('recipe_id').unsigned().notNullable().references('recipes.id').onDelete('CASCADE').onUpdate('CASCADE'); // for creating a foreign key - use the CASCADE when you want what happens to the referenced key will affect all child elements that reference it
+                 // for creating a foreign key - use the CASCADE when you want what happens to the referenced key will affect all child elements that reference it
+                 tbl.integer('recipe_id').unsigned().notNullable().references('recipes.id').onDelete('CASCADE').onUpdate('CASCADE'); 
              })
+             .createTable('recipe_ingredients', tbl => {
+                 tbl.increments();
+                 tbl.integer('recipe_id').unsigned().notNullable().references('recipes.id').onDelete('CASCADE').onUpdate('CASCADE');
+                 tbl.integer('ingredient_id').unsigned().notNullable().references('ingredients.id').onDelete('CASCADE').onUpdate('CASCADE');
+                 tbl.integer('ingredient_quantity').unsigned().notNullable();
+             });
 };
 
 exports.down = function(knex) {
-  
+    return knex.schema
+           .dropTableIfExists('recipe_ingredients')
+           .dropTableIfExists('steps')
+           .dropTableIfExists('ingredients')
+           .dropTableIfExists('recipes');
 };
