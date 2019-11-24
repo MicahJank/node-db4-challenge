@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const recipeId = req.params.id;
-    Recipe.getShoppingList(recipeId)
+    Recipe.getRecipeById(recipeId)
         .then(something => {
             res.json(something);
         })
