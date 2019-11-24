@@ -19,6 +19,21 @@ router.get('/', (req, res) => {
           });
 });
 
+router.get('/:id/instructions', (req, res) => {
+    const recipeId = req.params.id;
+
+    Recipe.getInstructions(recipeId)
+          .then(instructions => {
+              res.json(instructions);
+          })
+          .catch(err => {
+              res.status(500).json({
+                  message: 'An error occurred while trying to get the instructions for the recipe.',
+                  error: err
+              });
+          });
+});
+
 router.get('/:id', (req, res) => {
     const recipeId = req.params.id;
     Recipe.getRecipeById(recipeId)

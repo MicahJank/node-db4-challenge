@@ -22,7 +22,7 @@ function getShoppingList(id) {
 
 // get steps for a specific recipe
 function getInstructions(recipe_id) {
-    
+    return db('steps as s').where({ recipe_id }).orderBy('step_number');
 };
 
 // should return the recipe with the shopping list and steps involved
