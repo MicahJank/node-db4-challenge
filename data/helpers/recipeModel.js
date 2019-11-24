@@ -5,7 +5,8 @@ module.exports = {
     getRecipes,
     getShoppingList,
     getInstructions,
-    getRecipeById
+    getRecipeById,
+    getRecipesByIngredient
 }
 
 function getRecipes() {
@@ -13,10 +14,9 @@ function getRecipes() {
 };
 
 function getShoppingList(id) {
-    return db('recipes as r')
+    return db('recipe_ingredients as ri')
     .join('ingredients as i', 'i.id', 'ri.ingredient_id')
-    .join('recipe_ingredients as ri', 'ri.recipe_id', 'r.id')
-    .select('i.ingredient_name', 'ri.ingredient_quantity')
+    .select('i.ingredient_name as name', 'ri.ingredient_quantity as quantity')
     .where({ recipe_id: id });
 };
 
@@ -48,4 +48,11 @@ function getRecipeById(recipe_id) {
     }
 
     return query;
+};
+
+function getRecipesByIngredient(id) {
+    return db('recipes')
+           .join('recipe_ingredients as ri', 'ri.recipe_id', 'recipes.id')
+           .select('ri.recipe_id', 'recipe_name')
+           .where({ ingredient_id: id });
 };

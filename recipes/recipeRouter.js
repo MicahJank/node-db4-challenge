@@ -19,6 +19,21 @@ router.get('/', (req, res) => {
           });
 });
 
+router.get('/:id/shoppingList', (req, res) => {
+    const recipeId = req.params.id;
+
+    Recipe.getShoppingList(recipeId)
+          .then(shoppingList => {
+              res.json(shoppingList);
+          })
+          .catch(err => {
+              res.status(500).json({
+                  message: 'An error occured while trying to get the shopping list for the recipe.',
+                  error: err
+              });
+          });
+});
+
 router.get('/:id/instructions', (req, res) => {
     const recipeId = req.params.id;
 
