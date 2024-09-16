@@ -3,7 +3,7 @@
 ## Topics
 
 - database modeling.
-- migration scripts.
+- migration scripts. 
 - seeding.
 - knex.
 
